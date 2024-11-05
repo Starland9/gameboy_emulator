@@ -57,9 +57,17 @@ void Cpu::executeOpcode(uint8_t opcode)
 
     case 0x04: // INC B
         reg.B ++;
-        reg.F = (reg.B == 0) ? 0x80 : 0; // Met à jour le registre F
-        reg.F |= 0x20;
+        reg.F = (reg.B == 0) ? 0x80 : 0;
         reg.F |= (reg.B & 0x10) ? 0x40 : 0;
+        cycles += 4; // 4 cycles par instruction
+        break;
+
+    case 0x05: // DEC B
+        reg.F = 0; // Reinitialise le registre F
+        reg.F |= 0x40; // N = 1
+        reg.B --; // On diminue B
+        if (reg.B == 0) reg.F |= 0x80; // Z = 1 si B = 0xFF
+        reg.F |= (reg.B & 0x10) ? 0x20 : 0; // H = 1 si B > 0x0F
         cycles += 4; // 4 cycles par instruction
         break;
     
