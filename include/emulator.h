@@ -3,12 +3,14 @@
 
 #include <string>
 #include "cpu.h"
+#include "memory.h"
 
 class Emulator
 {
 
 private:
     Cpu cpu;
+    Memory memory;
 
 public:
     Emulator(/* args */);
@@ -19,7 +21,7 @@ public:
 
 };
 
-Emulator::Emulator(/* args */)
+Emulator::Emulator(/* args */) : cpu(memory)
 {
 }
 
